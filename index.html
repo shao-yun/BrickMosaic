@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shao-Yun Lo | BrickMosaic</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <h1 class="logo">Shao-Yun Lo</h1>
+            <nav>
+                <a href="#about">About</a>
+                <a href="#pipeline">Pipeline</a>
+                <a href="#results">Results</a>
+                <a href="#portfolio">Portfolio</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="container">
+            <h1 class="paper-title">BrickMosaic: Multi-Layer LEGO Stylization via Tiling Optimization and Palette-Constrained Rendering</h1>
+            <p class="authors">Shao-Yun Lo, Hsiang-Yu Wang, Wei Huang, and Ming-Te Chi</p>
+            <p class="affiliation">National Chengchi University, Taiwan</p>
+            <p class="publication-status">Accepted at <strong>Computer Graphics International (CGI) 2026</strong> · Presented in London · To appear in Springer LNCS</p>
+            <div class="links">
+                <a href="#portfolio" class="btn">📊 View Slides</a>
+                <a href="#" class="btn btn-outline" onclick="event.preventDefault()">💻 Code (Coming Soon)</a>
+            </div>
+        </section>
+
+        <section id="about" class="container">
+            <h2>Abstract</h2>
+            <div class="content-row">
+                <div class="text-content">
+                    <p>Transforming a single image into a LEGO®-style mosaic is challenging because the result must preserve semantic structure and visual coherence while respecting discrete brick geometries and a limited color palette.</p>
+                    <p>We present <strong>BrickMosaic</strong>, a unified multi-layer framework for assembly-aware LEGO stylization. Our method decomposes the input into depth-ordered semantic layers, generates LEGO-aware layouts through tiling optimization with brick decomposition and inner-contour pruning, and applies palette-constrained stylization with a perceptual loss to preserve local structure under the standard 39-color LEGO palette.</p>
+                    <p>Experiments show that BrickMosaic reduces tiling time by over 10× compared with the graph-based baseline TilinGNN while maintaining competitive contour similarity. Compared with general pixelization methods such as MYOS and SD-piXL, our method achieves the best LPIPS score, producing LEGO-style mosaics that are visually faithful and structurally plausible for assembly-aware design.</p>
+                </div>
+                <div class="image-content">
+                    <img src="assets/teaser3.png" alt="BrickMosaic Teaser">
+                </div>
+            </div>
+        </section>
+
+        <section id="pipeline" class="container">
+            <h2>Pipeline</h2>
+            <p class="section-desc">Our framework transforms an input image into an assembly-aware LEGO model through layered scene representation, LEGO-aware tiling optimization, and perceptual-enhanced palette-constrained LEGO stylization.</p>
+            <div class="pipeline-container">
+                <img src="assets/pipeline_new_2.png" alt="Image-to-LEGO Generation Pipeline" class="pipeline-img">
+            </div>
+        </section>
+
+        <section id="results" class="container">
+            <h2>Results: Multi-Layer Generation</h2>
+            <p class="section-desc">Explore how our method decomposes original images into semantic layers, applies element-specific stylization, and merges them into the final LEGO mosaic.</p>
+            
+            <div class="results-tabs">
+                <button class="tab-btn active" onclick="switchTab('demo-iron', this)">Iron Man</button>
+                <button class="tab-btn" onclick="switchTab('demo-starry', this)">The Starry Night</button>
+                <button class="tab-btn" onclick="switchTab('demo-tsunami', this)">The Great Wave</button>
+            </div>
+
+            <div class="interactive-results-container">
+                
+                <!-- Iron Man -->
+                <div class="interactive-card tab-content active" id="demo-iron">
+                    <h3 class="demo-title">Iron Man</h3>
+                    <div class="demo-view">
+                        <img src="assets/layers/Iron.png" class="demo-stage stage-original active" alt="Iron Original">
+                        <div class="demo-stage stage-layers">
+                            <div class="layer-grid">
+                                <figure><img src="assets/layers/IronBG.png" alt="BG"><figcaption>Background</figcaption></figure>
+                                <figure><img src="assets/layers/IronMG.png" alt="MG"><figcaption>Midground</figcaption></figure>
+                                <figure><img src="assets/layers/IronFG.png" alt="FG"><figcaption>Foreground</figcaption></figure>
+                                <figure><img src="assets/layers/Irondot.png" alt="Dot"><figcaption>Style: Dot</figcaption></figure>
+                            </div>
+                        </div>
+                        <img src="assets/layers/IronMan.png" class="demo-stage stage-final" alt="Iron Final">
+                    </div>
+                    <div class="demo-controls">
+                        <button class="demo-btn active" onclick="switchStage('demo-iron', 'stage-original', this)">1. Original</button>
+                        <button class="demo-btn" onclick="switchStage('demo-iron', 'stage-layers', this)">2. Expand Layers</button>
+                        <button class="demo-btn" onclick="switchStage('demo-iron', 'stage-final', this)">3. Merge LEGO</button>
+                    </div>
+                </div>
+
+                <!-- Starry Night -->
+                <div class="interactive-card tab-content" id="demo-starry">
+                    <h3 class="demo-title">The Starry Night</h3>
+                    <div class="demo-view">
+                        <img src="assets/layers/TheStarryNight.jpg" class="demo-stage stage-original active" alt="Starry Original">
+                        <div class="demo-stage stage-layers">
+                            <div class="layer-grid">
+                                <figure><img src="assets/layers/StarryBG.png" alt="BG"><figcaption>Background</figcaption></figure>
+                                <figure><img src="assets/layers/StarryMG.png" alt="MG"><figcaption>Midground</figcaption></figure>
+                                <figure><img src="assets/layers/StarryFG.png" alt="FG"><figcaption>Foreground</figcaption></figure>
+                                <figure><img src="assets/layers/StarryFlow.png" alt="Flow"><figcaption>Style: Flow</figcaption></figure>
+                            </div>
+                        </div>
+                        <img src="assets/layers/StarryNight.png" class="demo-stage stage-final" alt="Starry Final">
+                    </div>
+                    <div class="demo-controls">
+                        <button class="demo-btn active" onclick="switchStage('demo-starry', 'stage-original', this)">1. Original</button>
+                        <button class="demo-btn" onclick="switchStage('demo-starry', 'stage-layers', this)">2. Expand Layers</button>
+                        <button class="demo-btn" onclick="switchStage('demo-starry', 'stage-final', this)">3. Merge LEGO</button>
+                    </div>
+                </div>
+
+                <!-- Tsunami -->
+                <div class="interactive-card tab-content" id="demo-tsunami">
+                    <h3 class="demo-title">The Great Wave</h3>
+                    <div class="demo-view">
+                        <img src="assets/layers/Tsunami.jpg" class="demo-stage stage-original active" alt="Tsunami Original">
+                        <div class="demo-stage stage-layers">
+                            <div class="layer-grid">
+                                <figure><img src="assets/layers/TsunamiBG.png" alt="BG"><figcaption>Background</figcaption></figure>
+                                <figure><img src="assets/layers/TsunamiMG.png" alt="MG"><figcaption>Midground</figcaption></figure>
+                                <figure><img src="assets/layers/TsunamiFG.png" alt="FG"><figcaption>Foreground</figcaption></figure>
+                                <figure><img src="assets/layers/TsunamiSpray.png" alt="Spray"><figcaption>Style: Spray</figcaption></figure>
+                            </div>
+                        </div>
+                        <img src="assets/layers/Tsunami.png" class="demo-stage stage-final" alt="Tsunami Final">
+                    </div>
+                    <div class="demo-controls">
+                        <button class="demo-btn active" onclick="switchStage('demo-tsunami', 'stage-original', this)">1. Original</button>
+                        <button class="demo-btn" onclick="switchStage('demo-tsunami', 'stage-layers', this)">2. Expand Layers</button>
+                        <button class="demo-btn" onclick="switchStage('demo-tsunami', 'stage-final', this)">3. Merge LEGO</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="portfolio" class="container bg-light">
+            <h2>Portfolio / Slides Showcase</h2>
+            <p class="section-desc">BrickMosaic Project Presentation.</p>
+            <div class="carousel-container">
+                <button id="prevBtn" class="carousel-btn">❮</button>
+                <div class="carousel-track-container">
+                    <ul class="carousel-track" id="carouselTrack">
+                        <!-- JS will inject images here -->
+                    </ul>
+                </div>
+                <button id="nextBtn" class="carousel-btn">❯</button>
+            </div>
+            <div class="carousel-indicators" id="carouselIndicators"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Shao-Yun Lo. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
